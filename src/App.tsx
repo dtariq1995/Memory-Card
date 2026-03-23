@@ -1,13 +1,15 @@
-import './App.css'
-import Header from './Header'
-import GameBoard from './GameBoard'
+import './App.css';
+import Header from './Header';
+import GameBoard from './GameBoard';
+import { Suspense } from 'react';
+import { useSuspenseQuery } from '@tanstack/react-query';
 
 function App() {
 
   return (
     <>
       <Header />
-      <GameBoard />
+      <Suspense fallback="Loading..."><GameBoard /></Suspense>
     </>
   )
 }

@@ -1,14 +1,16 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { useSuspenseQuery } from "@tanstack/react-query";
 
 function GameBoard() {
   const [cards, setCards] = useState([]);
 
-  useEffect(() => {
-    // Fetch card data from Pokemon TCG API and set it to state
-  })
-
+  const { data } = useSuspenseQuery({
+    queryKey: ["cards"],
+    queryFn: () => fetch("https://api.pokemontcg.io/v2/cards?pageSize=15").then((response) => response.json()),
+  });
 
   return (
+
     <div className="game-board">
       {/* Game board content goes here */}
     </div>
