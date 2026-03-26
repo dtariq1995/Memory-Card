@@ -9,10 +9,18 @@ function GameBoard() {
     queryFn: () => fetch("https://api.pokemontcg.io/v2/cards?pageSize=15").then((response) => response.json()),
   });
 
+  
+
+
   return (
 
     <div className="game-board">
-      {/* Game board content goes here */}
+      {data.data.map((card) => (
+        <div key={card.id} className="card">
+          <img src={card.images.small} alt={card.name} />
+          <h3>{card.name}</h3>
+        </div>
+      ))}
     </div>
   );
 }
