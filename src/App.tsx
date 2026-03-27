@@ -1,14 +1,16 @@
 import './App.css';
 import Header from './Header';
 import GameBoard from './GameBoard';
-import { Suspense } from 'react';
+import { Suspense, useState } from 'react';
 
 function App() {
+  const [score, setScore] = useState(0);
+  const [bestScore, setBestScore] = useState(0);
 
   return (
     <>
-      <Header />
-      <Suspense fallback="Loading..."><GameBoard /></Suspense>
+      <Header score={score} bestScore={bestScore} />
+      <Suspense fallback="Loading..."><GameBoard score={score} setScore={setScore} bestScore={bestScore} setBestScore={setBestScore} /></Suspense>
     </>
   )
 }

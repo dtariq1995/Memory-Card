@@ -9,6 +9,13 @@ interface Card {
   };
 }
 
+interface GameBoardProps {
+  score: number;
+  setScore: (score: number) => void;
+  bestScore: number;
+  setBestScore: (bestScore: number) => void;
+}
+
 function shuffleBoard(arr: Card[]) : Card[] {
   const shuffled = [...arr]; // don't mutate the original array
   for (let i = shuffled.length - 1; i > 0; i--) {
@@ -18,20 +25,18 @@ function shuffleBoard(arr: Card[]) : Card[] {
   return shuffled;
 }
 
-function GameBoard() {
+function GameBoard({score, setScore, bestScore, setBestScore}: GameBoardProps) {
   const [cards, setCards] = useState<Card[]>([]);
   const [clickedIds, setClickedIds] = useState<Set<string>>(new Set());
-  const [score, setScore] = useState(0);
-  const [bestScore, setBestScore] = useState(0);
 
   const { data } = useSuspenseQuery({
     queryKey: ["cards"],
-    queryFn: () => fetch("https://api.pokemontcg.io/v2/cards?pageSize=15").then((response) => response.json()),
+    queryFn: () => fetch("https://api.pokemontcg.io/v2/cards?pageSize=100").then((response) => response.json()),
     staleTime: 24 * 60 * 60 * 1000, // 24 hours
   });
 
   useEffect(() => {
-    setCards(data.data);
+    setCards(shuffleBoard(data.data).slice(0, 15)); // Grab 15 random cards from the fetched data
   }, [data]);
 
   function handleCardClick(card: Card) {

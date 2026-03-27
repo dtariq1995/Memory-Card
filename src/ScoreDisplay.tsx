@@ -1,8 +1,8 @@
-function ScoreDisplay() {
+function ScoreDisplay({ score, bestScore }: { score: number; bestScore: number }) {
     return (
     <div className="score-display">
-        <h2>Score: 0</h2>
-        <h2>High Score: 0</h2>
+        <h2>Score: {score}</h2>
+        <h2>High Score: {bestScore}</h2>
     </div>);
 }
 
