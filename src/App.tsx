@@ -10,7 +10,7 @@ function App() {
   return (
     <>
       <Header score={score} bestScore={bestScore} />
-      <Suspense fallback="Loading..."><GameBoard score={score} setScore={setScore} bestScore={bestScore} setBestScore={setBestScore} /></Suspense>
+      <Suspense fallback="Loading Cards..."><GameBoard score={score} setScore={setScore} bestScore={bestScore} setBestScore={setBestScore} /></Suspense>
     </>
   )
 }
