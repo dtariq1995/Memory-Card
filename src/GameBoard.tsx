@@ -60,7 +60,6 @@ function GameBoard({score, setScore, bestScore, setBestScore}: GameBoardProps) {
   }
 
   return (
-
     <div className="game-board">
       {cards.map((card) => (
         <Tilt tiltReverse glareEnable glareMaxOpacity={0.4} glarePosition="all" key={card.id}>
