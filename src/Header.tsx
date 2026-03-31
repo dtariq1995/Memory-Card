@@ -8,8 +8,7 @@ interface HeaderProps {
 function Header({ score, bestScore }: HeaderProps) {
     return (
         <header>
-            <h1>PokéMemory Card Game</h1>
-            <p>Get points by clicking on a card, but don't click on the same card twice!</p>
+            <h1><img src="/pokeball.png" alt="pokeball" className="title-icon" /><span className="poke">Poké</span><span className="rest">Memory</span></h1>
             <ScoreDisplay score={score} bestScore={bestScore} />
         </header>
     );

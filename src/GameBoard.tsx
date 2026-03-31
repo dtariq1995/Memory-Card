@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSuspenseQuery } from "@tanstack/react-query";
+import Tilt from "react-parallax-tilt";
 
 interface Card {
   id: string;
@@ -62,9 +63,11 @@ function GameBoard({score, setScore, bestScore, setBestScore}: GameBoardProps) {
 
     <div className="game-board">
       {cards.map((card) => (
-        <div key={card.id} className="card" onClick={() => handleCardClick(card)}>
-          <img src={card.images.small} alt={card.name} />
-        </div>
+        <Tilt tiltReverse glareEnable glareMaxOpacity={0.4} glarePosition="all" key={card.id}>
+          <div className="card" onClick={() => handleCardClick(card)}>
+            <img src={card.images.small} alt={card.name} />
+          </div>
+        </Tilt>
       ))}
     </div>
   );
