@@ -33,7 +33,7 @@ function GameBoard({score, setScore, bestScore, setBestScore}: GameBoardProps) {
 
   const { data } = useSuspenseQuery({
     queryKey: ["cards"],
-    queryFn: () => fetch("https://api.pokemontcg.io/v2/cards?pageSize=100").then((response) => response.json()),
+    queryFn: () => fetch("https://api.pokemontcg.io/v2/cards?q=set.id:base4 nationalPokedexNumbers:[1 TO 151]&pageSize=102").then((response) => response.json()),
     staleTime: 24 * 60 * 60 * 1000, // 24 hours
   });
 
