@@ -18,7 +18,7 @@ function App() {
   return (
     <>
       <Header score={score} bestScore={bestScore} />
-      <Suspense fallback="Loading Cards..."><GameBoard score={score} setScore={setScore} bestScore={bestScore} setBestScore={updateBestScore} /></Suspense>
+      <Suspense fallback={<div className="loading-container"><img src="/favicon.svg" className="loading-spinner" /><p className="loading-text dots-loader">Loading Cards</p></div>}><GameBoard score={score} setScore={setScore} bestScore={bestScore} setBestScore={updateBestScore} /></Suspense>
     </>
   )
 }
