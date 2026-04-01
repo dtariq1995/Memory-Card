@@ -29,6 +29,7 @@ function shuffleBoard(arr: Card[]) : Card[] {
 function GameBoard({score, setScore, bestScore, setBestScore}: GameBoardProps) {
   const [cards, setCards] = useState<Card[]>([]);
   const [clickedIds, setClickedIds] = useState<Set<string>>(new Set());
+  const [shuffleCount, setShuffleCount] = useState(0);
 
   const { data } = useSuspenseQuery({
     queryKey: ["cards"],
@@ -46,6 +47,7 @@ function GameBoard({score, setScore, bestScore, setBestScore}: GameBoardProps) {
       setClickedIds(new Set());
       setScore(0);
       setCards(shuffleBoard(cards));
+      setShuffleCount(c => c + 1);
     }
     else {
       // Card has not been clicked, add it to the set and update the score
@@ -56,13 +58,14 @@ function GameBoard({score, setScore, bestScore, setBestScore}: GameBoardProps) {
       }
       setClickedIds(new Set([...clickedIds, card.id]));
       setCards(shuffleBoard(cards));
+      setShuffleCount(c => c + 1);
     }
   }
 
   return (
     <div className="game-board">
       {cards.map((card) => (
-        <Tilt tiltReverse glareEnable glareMaxOpacity={0.4} glarePosition="all" key={card.id}>
+        <Tilt tiltReverse glareEnable glareMaxOpacity={0.4} glarePosition="all" key={`${card.id}-${shuffleCount}`}>
           <div className="card" onClick={() => handleCardClick(card)}>
             <img src={card.images.small} alt={card.name} />
           </div>
