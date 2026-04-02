@@ -1,7 +1,6 @@
 import './App.css';
 import Header from './Header';
 import GameBoard from './GameBoard';
-import MusicPlayer from './MusicPlayer';
 import { Suspense, useState } from 'react';
 
 function App() {
@@ -18,7 +17,6 @@ function App() {
 
   return (
     <>
-      <MusicPlayer />
       <Header score={score} bestScore={bestScore} />
       <Suspense fallback={<div className="loading-container"><img src="/favicon.svg" className="loading-spinner" /><p className="loading-text dots-loader">LOADING CARDS</p></div>}><GameBoard score={score} setScore={setScore} bestScore={bestScore} setBestScore={updateBestScore} /></Suspense>
     </>

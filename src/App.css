@@ -17,11 +17,41 @@ body {
 .game-board {
   margin-top: 1.5rem;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
   width: 100%;
   max-width: calc(180px * 5 + 1rem * 6);
   padding: 1rem;
+}
+
+@media (min-width: 480px) {
+  .game-board {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 700px) {
+  .game-board {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (min-width: 900px) {
+  .game-board {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .game-board {
+    max-width: 1200px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .game-board {
+    max-width: 1400px;
+  }
 }
 
 .card {
@@ -130,6 +160,21 @@ h1 .rest {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+@media (max-width: 479px) {
+  .music-player {
+    position: static;
+    margin-bottom: 0.5rem;
+  }
+
+  .score-display {
+    gap: 0.75rem;
+  }
+
+  .score-display h2 {
+    font-size: 0.68rem;
+  }
 }
 
 .music-icon {
