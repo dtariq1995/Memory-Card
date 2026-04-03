@@ -15,6 +15,7 @@ interface GameBoardProps {
   setScore: (score: number) => void;
   bestScore: number;
   setBestScore: (bestScore: number) => void;
+  cardCount: number;
 }
 
 function shuffleBoard(arr: Card[]) : Card[] {
@@ -26,7 +27,7 @@ function shuffleBoard(arr: Card[]) : Card[] {
   return shuffled;
 }
 
-function GameBoard({score, setScore, bestScore, setBestScore}: GameBoardProps) {
+function GameBoard({score, setScore, bestScore, setBestScore, cardCount}: GameBoardProps) {
   const [cards, setCards] = useState<Card[]>([]);
   const [clickedIds, setClickedIds] = useState<Set<string>>(new Set());
   const [shuffleCount, setShuffleCount] = useState(0);
@@ -38,8 +39,8 @@ function GameBoard({score, setScore, bestScore, setBestScore}: GameBoardProps) {
   });
 
   useEffect(() => {
-    setCards(shuffleBoard(data.data).slice(0, 15)); // Grab 15 random cards from the fetched data
-  }, [data]);
+    setCards(shuffleBoard(data.data).slice(0, cardCount)); // Grab 15 random cards from the fetched data
+  }, [data, cardCount]);
 
   function handleCardClick(card: Card) {
     if (clickedIds.has(card.id)) {
