@@ -16,6 +16,8 @@ interface GameBoardProps {
   bestScore: number;
   setBestScore: (bestScore: number) => void;
   cardCount: number;
+  onGameOver: () => void;
+  onGameWon: () => void;
 }
 
 function shuffleBoard(arr: Card[]) : Card[] {
@@ -27,7 +29,7 @@ function shuffleBoard(arr: Card[]) : Card[] {
   return shuffled;
 }
 
-function GameBoard({score, setScore, bestScore, setBestScore, cardCount}: GameBoardProps) {
+function GameBoard({score, setScore, bestScore, setBestScore, cardCount, onGameOver, onGameWon}: GameBoardProps) {
   const [cards, setCards] = useState<Card[]>([]);
   const [clickedIds, setClickedIds] = useState<Set<string>>(new Set());
   const [shuffleCount, setShuffleCount] = useState(0);
@@ -39,16 +41,22 @@ function GameBoard({score, setScore, bestScore, setBestScore, cardCount}: GameBo
   });
 
   useEffect(() => {
-    setCards(shuffleBoard(data.data).slice(0, cardCount)); // Grab 15 random cards from the fetched data
+    setCards(shuffleBoard(data.data).slice(0, cardCount)); // Grab random cards from the fetched data
   }, [data, cardCount]);
 
   function handleCardClick(card: Card) {
     if (clickedIds.has(card.id)) {
       // Card has already been clicked, reset the game
+      onGameOver();
       setClickedIds(new Set());
       setScore(0);
       setCards(shuffleBoard(cards));
       setShuffleCount(c => c + 1);
+    }
+    else if (score + 1 === cardCount) {
+      // Player has won the game by clicking all unique cards
+      onGameWon();
+      setClickedIds(new Set());
     }
     else {
       // Card has not been clicked, add it to the set and update the score

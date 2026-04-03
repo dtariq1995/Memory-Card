@@ -14,6 +14,14 @@ function App() {
     return stored ? parseInt(stored) : 0;
   });
 
+  function handleGameOver() {
+    setGameState('gameover');
+  }
+
+  function handleGameWon() {
+    setGameState('won');
+  }
+
   function updateBestScore(score: number) {
     setBestScore(score);
     localStorage.setItem('bestScore', score.toString());
@@ -45,7 +53,17 @@ function App() {
     return (
       <>
         <Header score={score} bestScore={bestScore} />
-        <Suspense fallback={<div className="loading-container"><img src="/favicon.svg" className="loading-spinner" /><p className="loading-text dots-loader">LOADING CARDS</p></div>}><GameBoard cardCount={cardCount} score={score} setScore={setScore} bestScore={bestScore} setBestScore={updateBestScore} /></Suspense>
+        <Suspense fallback={
+          <div className="loading-container">
+            <img src="/favicon.svg" className="loading-spinner" />
+            <p className="loading-text dots-loader">LOADING CARDS</p>
+          </div>}>
+          <GameBoard
+            cardCount={cardCount} 
+            score={score} setScore={setScore} 
+            bestScore={bestScore} setBestScore={updateBestScore}  
+            onGameOver={handleGameOver} onGameWon={handleGameWon}/>                              
+        </Suspense>
       </>
     );
   }
