@@ -162,6 +162,12 @@ h1 .rest {
   justify-content: center;
 }
 
+@media (max-width: 375px) {
+  .modal-header {
+    font-size: 0.6rem;
+  }
+}
+
 @media (max-width: 479px) {
   .music-player {
     position: static;
@@ -182,3 +188,82 @@ h1 .rest {
   height: 1.5rem;
   display: block;
 }
+
+.game-start-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-header {
+  margin: 0 0 1.25rem 0;
+  font-size: 0.85rem;
+  color: #1a1a1a;
+}
+
+.difficulty {
+  background: none;
+  border: none;
+  color: #1a1a1a;
+  font-family: inherit;
+  font-size: 0.7rem;
+  cursor: url('/HandCursor.png') 0 0, pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0;
+}
+
+.difficulty::before {
+  content: '►';
+  visibility: hidden;
+  animation: none;
+}
+
+.difficulty--selected::before {
+  visibility: visible;
+  animation: blink 0.8s step-start infinite;
+}
+
+@keyframes blink {
+  0%, 100% { visibility: visible; }
+  50% { visibility: hidden; }
+}
+
+@keyframes modal-enter {
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.game-start {
+  animation: modal-enter 0.3s ease-out;
+  width: fit-content;
+  max-width: 90vw;
+  margin: 0;
+}
+
+.framed {
+  position: relative;
+  border-image: url('./border-corner.png') 42 / 1 / 0 round;
+  border-width: 21px;
+  border-style: solid;
+  padding: 1em;
+  margin: 1em 0px 0px;
+  min-width: 320px;
+  max-width: 440px;
+  width: 90vw;
+}
+
+.neutral-border {
+  color: rgb(24, 16, 16);
+  background: rgb(248, 243, 248);
+}
+
