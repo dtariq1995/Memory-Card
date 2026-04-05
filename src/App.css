@@ -336,7 +336,7 @@ h1 .rest {
 
 .framed {
   position: relative;
-  border-image: url('./border-corner.png') 42 / 1 / 0 round;
+  border-image: url('/border-corner.png') 42 / 1 / 0 round;
   border-width: 21px;
   border-style: solid;
   padding: 1.5rem;
