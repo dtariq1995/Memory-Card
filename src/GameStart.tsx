@@ -1,5 +1,6 @@
 
 import { useState, useEffect } from 'react';
+import Typewriter from './Typewriter';
 
 const difficulties = ['easy', 'medium', 'hard'] as const;
 
@@ -26,10 +27,12 @@ function GameStart({ onSelectDifficulty }: GameStartProps) {
 
   return (
     <div className="game-start-overlay">
-      <div className="framed neutral-border game-start">
+      <div className="framed neutral-border game-start game-start-enter">
         <img src="/intro.gif" className="intro-gif" />
-        <h3 className="modal-header">Select a Difficulty</h3>
-        <div className="modal-button-list">
+        <h3 className="modal-header">
+          <Typewriter text="Select a Difficulty" delay={450} />
+        </h3>
+        <div className="modal-button-list fade-in-delayed" style={{ animationDelay: '1200ms' }}>
           {difficulties.map((level, i) => (
             <button
               key={level}

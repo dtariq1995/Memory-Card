@@ -1,4 +1,3 @@
-// TODO: Add animations for card flips, game win, and game over
 // TODO: Add sound effects for card clicks,flips, game win, and game over
 
 import './App.css';

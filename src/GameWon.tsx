@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import Typewriter from './Typewriter';
 
 const winOptions = ['Continue', 'Quit'] as const;
 
@@ -27,13 +28,16 @@ function GameWon({ onContinue, onRestart }: GameWonProps) {
 
   return (
     <div className="game-start-overlay">
-      <div className="framed neutral-border game-start">
-        <h3 className="modal-header">You Win!</h3>
-        <img src="/celebration.gif" className="modal-gif" />
+      <div className="framed neutral-border game-start battle-modal">
+        <h3 className="modal-header">
+          <Typewriter text="You Win!" delay={300} />
+        </h3>
+        <img src="/celebration.gif" className="modal-gif fade-in-delayed" style={{ animationDelay: '600ms' }} />
         {winOptions.map((option, i) => (
           <button
             key={option}
-            className={`modal-button${selected === i ? ' modal-button--selected' : ''}`}
+            className={`modal-button fade-in-delayed${selected === i ? ' modal-button--selected' : ''}`}
+            style={{ animationDelay: '900ms' }}
             onClick={i === 0 ? onContinue : onRestart}
             onMouseEnter={() => setSelected(i)}
           >{option}
@@ -45,4 +49,3 @@ function GameWon({ onContinue, onRestart }: GameWonProps) {
 }
 
 export default GameWon;
-

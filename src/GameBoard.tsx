@@ -20,6 +20,8 @@ interface GameBoardProps {
   onGameWon: () => void;
 }
 
+const FLIP_DURATION = 400;
+
 function shuffleBoard(arr: Card[]) : Card[] {
   const shuffled = [...arr]; // don't mutate the original array
   for (let i = shuffled.length - 1; i > 0; i--) {
@@ -33,6 +35,7 @@ function GameBoard({score, setScore, bestScore, setBestScore, cardCount, onGameO
   const [cards, setCards] = useState<Card[]>([]);
   const [clickedIds, setClickedIds] = useState<Set<string>>(new Set());
   const [shuffleCount, setShuffleCount] = useState(0);
+  const [isFlipping, setIsFlipping] = useState(false);
 
   const { data } = useSuspenseQuery({
     queryKey: ["cards"],
@@ -45,16 +48,22 @@ function GameBoard({score, setScore, bestScore, setBestScore, cardCount, onGameO
   }, [data, cardCount]);
 
   function handleCardClick(card: Card) {
+    if (isFlipping) return;
+
     if (clickedIds.has(card.id)) {
-      // Card has already been clicked, reset the game
-      onGameOver(score);
-      setClickedIds(new Set());
-      setScore(0);
-      setCards(shuffleBoard(cards));
-      setShuffleCount(c => c + 1);
+      // Card has already been clicked — flip out, then trigger game over
+      setIsFlipping(true);
+      setTimeout(() => {
+        onGameOver(score);
+        setClickedIds(new Set());
+        setScore(0);
+        setCards(shuffleBoard(cards));
+        setShuffleCount(c => c + 1);
+        setIsFlipping(false);
+      }, FLIP_DURATION);
     }
     else if (clickedIds.size + 1 === cardCount) {
-      // Player has won the game by clicking all unique cards
+      // Player has won — no flip on the last card
       const newScore = score + 1;
       setScore(newScore);
       if (newScore > bestScore) {
@@ -64,15 +73,19 @@ function GameBoard({score, setScore, bestScore, setBestScore, cardCount, onGameO
       onGameWon();
     }
     else {
-      // Card has not been clicked, add it to the set and update the score
-      const newScore = score + 1;
-      setScore(newScore);
-      if (newScore > bestScore) {
-        setBestScore(newScore);
-      }
-      setClickedIds(new Set([...clickedIds, card.id]));
-      setCards(shuffleBoard(cards));
-      setShuffleCount(c => c + 1);
+      // Valid click — flip out, shuffle, flip back in
+      setIsFlipping(true);
+      setTimeout(() => {
+        const newScore = score + 1;
+        setScore(newScore);
+        if (newScore > bestScore) {
+          setBestScore(newScore);
+        }
+        setClickedIds(new Set([...clickedIds, card.id]));
+        setCards(shuffleBoard(cards));
+        setShuffleCount(c => c + 1);
+        setIsFlipping(false);
+      }, FLIP_DURATION);
     }
   }
 
@@ -81,7 +94,14 @@ function GameBoard({score, setScore, bestScore, setBestScore, cardCount, onGameO
       {cards.map((card) => (
         <Tilt tiltReverse glareEnable glareMaxOpacity={0.4} glarePosition="all" key={`${card.id}-${shuffleCount}`}>
           <div className="card" onClick={() => handleCardClick(card)}>
-            <img src={card.images.small} alt={card.name} />
+            <div className={`card-inner${isFlipping ? ' flipping' : ''}`}>
+              <div className="card-front">
+                <img src={card.images.small} alt={card.name} />
+              </div>
+              <div className="card-back">
+                <img src="/card-back.png" alt="card back" />
+              </div>
+            </div>
           </div>
         </Tilt>
       ))}
