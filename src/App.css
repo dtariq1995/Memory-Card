@@ -152,6 +152,7 @@ h1 .rest {
   position: fixed;
   top: 0.5rem;
   left: 0.5rem;
+  z-index: 10;
   background: rgba(255, 255, 255, 0.35);
   border: none;
   border-radius: 50%;
@@ -195,20 +196,28 @@ h1 .rest {
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 .modal-header {
   margin: 0 0 1.25rem 0;
-  font-size: 0.85rem;
-  color: #1a1a1a;
+  font-size: 1rem;
+  color: #000000;
 }
 
-.difficulty {
+.modal-button-list {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.modal-button {
   background: none;
   border: none;
-  color: #1a1a1a;
+  color: #000000;
   font-family: inherit;
-  font-size: 0.7rem;
+  font-size: 0.8rem;
   cursor: url('/HandCursor.png') 0 0, pointer;
   display: flex;
   align-items: center;
@@ -216,13 +225,13 @@ h1 .rest {
   padding: 0.35rem 0;
 }
 
-.difficulty::before {
+.modal-button::before {
   content: '►';
   visibility: hidden;
   animation: none;
 }
 
-.difficulty--selected::before {
+.modal-button--selected::before {
   visibility: visible;
   animation: blink 0.8s step-start infinite;
 }
@@ -248,6 +257,33 @@ h1 .rest {
   width: fit-content;
   max-width: 90vw;
   margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.modal-text {
+  font-size: 0.75rem;
+  margin: 0 0 0.75rem 0;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.modal-icon {
+  width: 1rem;
+  height: 1rem;
+}
+
+.modal-gif {
+  width: 16rem;
+  margin-bottom: 0.75rem;
+}
+
+.intro-gif {
+  width: 100%;
+  margin-bottom: 1rem;
+  width: 50px;
 }
 
 .framed {
@@ -255,7 +291,7 @@ h1 .rest {
   border-image: url('./border-corner.png') 42 / 1 / 0 round;
   border-width: 21px;
   border-style: solid;
-  padding: 1em;
+  padding: 1.5rem;
   margin: 1em 0px 0px;
   min-width: 320px;
   max-width: 440px;

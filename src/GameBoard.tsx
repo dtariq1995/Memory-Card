@@ -16,7 +16,7 @@ interface GameBoardProps {
   bestScore: number;
   setBestScore: (bestScore: number) => void;
   cardCount: number;
-  onGameOver: () => void;
+  onGameOver: (finalScore: number) => void;
   onGameWon: () => void;
 }
 
@@ -47,16 +47,21 @@ function GameBoard({score, setScore, bestScore, setBestScore, cardCount, onGameO
   function handleCardClick(card: Card) {
     if (clickedIds.has(card.id)) {
       // Card has already been clicked, reset the game
-      onGameOver();
+      onGameOver(score);
       setClickedIds(new Set());
       setScore(0);
       setCards(shuffleBoard(cards));
       setShuffleCount(c => c + 1);
     }
-    else if (score + 1 === cardCount) {
+    else if (clickedIds.size + 1 === cardCount) {
       // Player has won the game by clicking all unique cards
-      onGameWon();
+      const newScore = score + 1;
+      setScore(newScore);
+      if (newScore > bestScore) {
+        setBestScore(newScore);
+      }
       setClickedIds(new Set());
+      onGameWon();
     }
     else {
       // Card has not been clicked, add it to the set and update the score

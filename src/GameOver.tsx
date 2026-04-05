@@ -7,11 +7,16 @@ interface GameOverProps {
 
 function GameOver({score, bestScore, onRestart}: GameOverProps) {
     return (
-        <div className="game-over">
-            <h2>GAME OVER</h2>
-            <p>Your Score: {score}</p>
-            <p>Best Score: {bestScore}</p>
-            <button onClick={onRestart}>Play Again</button>
+        <div className="game-start-overlay">
+            <div className="framed neutral-border game-start">
+                <h3 className="modal-header">GAME OVER!</h3>
+                <img src="/pika-cry.gif" className="modal-gif" />
+                <p className="modal-text">Your final score is: <strong>{score}</strong></p>
+                <p className="modal-text">Best Score: <img src="/trophy.png" className="modal-icon" /><strong>{bestScore}</strong></p>
+                <button className="modal-button modal-button--selected" onClick={onRestart}>
+                    Play Again
+                </button>
+            </div>
         </div>
     );
 }

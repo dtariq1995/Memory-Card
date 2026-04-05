@@ -3,7 +3,11 @@ import { useState, useEffect } from 'react';
 
 const difficulties = ['easy', 'medium', 'hard'] as const;
 
-function GameStart({ onSelectDifficulty }: { onSelectDifficulty: (level: 'easy' | 'medium' | 'hard') => void }) {
+interface GameStartProps {
+  onSelectDifficulty: (level: 'easy' | 'medium' | 'hard') => void;
+}
+
+function GameStart({ onSelectDifficulty }: GameStartProps) {
   const [selected, setSelected] = useState(0);
 
   useEffect(() => {
@@ -23,16 +27,19 @@ function GameStart({ onSelectDifficulty }: { onSelectDifficulty: (level: 'easy' 
   return (
     <div className="game-start-overlay">
       <div className="framed neutral-border game-start">
-          <h3 className="modal-header">Select a Difficulty</h3>
+        <img src="/intro.gif" className="intro-gif" />
+        <h3 className="modal-header">Select a Difficulty</h3>
+        <div className="modal-button-list">
           {difficulties.map((level, i) => (
-              <button
-                  key={level}
-                  className={`difficulty${selected === i ? ' difficulty--selected' : ''}`}
-                  onClick={() => onSelectDifficulty(level)}
-                  onMouseEnter={() => setSelected(i)}>
-                  {level.charAt(0).toUpperCase() + level.slice(1)}
-              </button>
+            <button
+              key={level}
+              className={`modal-button${selected === i ? ' modal-button--selected' : ''}`}
+              onClick={() => onSelectDifficulty(level)}
+              onMouseEnter={() => setSelected(i)}>
+              {level.charAt(0).toUpperCase() + level.slice(1)}
+            </button>
           ))}
+        </div>
       </div>
     </div>
   );

@@ -1,5 +1,4 @@
 import ScoreDisplay from "./ScoreDisplay";
-import MusicPlayer from "./MusicPlayer";
 
 interface HeaderProps {
   score: number;
@@ -9,7 +8,6 @@ interface HeaderProps {
 function Header({ score, bestScore }: HeaderProps) {
     return (
         <header>
-            <MusicPlayer />
             <h1><img src="/pokeball.png" alt="pokeball" className="title-icon" /><span className="poke">Poké</span><span className="rest">Memory</span></h1>
             <ScoreDisplay score={score} bestScore={bestScore} />
         </header>
