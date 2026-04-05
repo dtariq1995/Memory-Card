@@ -18,7 +18,11 @@ function shuffleTracks(arr: string[]): string[] {
   return shuffled;
 }
 
-function MusicPlayer() {
+interface MusicPlayerProps {
+  paused: boolean;
+}
+
+function MusicPlayer({ paused }: MusicPlayerProps) {
   const [playing, setPlaying] = useState(false);
   const [trackIndex, setTrackIndex] = useState(0);
   const [playlist] = useState<string[]>(() => shuffleTracks(tracks));
@@ -35,7 +39,7 @@ function MusicPlayer() {
     <>
       <ReactPlayer
         src={playlist[trackIndex]}
-        playing={playing}
+        playing={playing && !paused}
         onEnded={handleTrackEnd}
         volume={0.3}
         width={0}

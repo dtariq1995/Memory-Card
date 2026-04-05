@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Typewriter from './Typewriter';
+import { playSound, playLoop, stopSound } from './sounds';
 
 const winOptions = ['Continue', 'Quit'] as const;
 
@@ -10,6 +11,12 @@ interface GameWonProps {
 
 function GameWon({ onContinue, onRestart }: GameWonProps) {
   const [selected, setSelected] = useState(0);
+  const victoryAudio = useRef<HTMLAudioElement | null>(null);
+
+  useEffect(() => {
+    victoryAudio.current = playLoop('/sfx/victory.mp3');
+    return () => stopSound(victoryAudio.current);
+  }, []);
 
   useEffect(() => {
     function handleKeyDown(e: KeyboardEvent) {
@@ -26,6 +33,11 @@ function GameWon({ onContinue, onRestart }: GameWonProps) {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [selected, onContinue, onRestart]);
 
+  function handleQuit() {
+    playSound('/sfx/pokemon-a-button.mp3');
+    onRestart();
+  }
+
   return (
     <div className="game-start-overlay">
       <div className="framed neutral-border game-start battle-modal">
@@ -38,7 +50,7 @@ function GameWon({ onContinue, onRestart }: GameWonProps) {
             key={option}
             className={`modal-button fade-in-delayed${selected === i ? ' modal-button--selected' : ''}`}
             style={{ animationDelay: '900ms' }}
-            onClick={i === 0 ? onContinue : onRestart}
+            onClick={i === 0 ? onContinue : handleQuit}
             onMouseEnter={() => setSelected(i)}
           >{option}
           </button>

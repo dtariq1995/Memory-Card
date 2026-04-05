@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import Tilt from "react-parallax-tilt";
+import { playSound } from "./sounds";
 
 interface Card {
   id: string;
@@ -52,6 +53,7 @@ function GameBoard({score, setScore, bestScore, setBestScore, cardCount, onGameO
 
     if (clickedIds.has(card.id)) {
       // Card has already been clicked — flip out, then trigger game over
+      playSound('/sfx/flip.mp3');
       setIsFlipping(true);
       setTimeout(() => {
         onGameOver(score);
@@ -74,6 +76,7 @@ function GameBoard({score, setScore, bestScore, setBestScore, cardCount, onGameO
     }
     else {
       // Valid click — flip out, shuffle, flip back in
+      playSound('/sfx/flip.mp3');
       setIsFlipping(true);
       setTimeout(() => {
         const newScore = score + 1;
@@ -90,7 +93,7 @@ function GameBoard({score, setScore, bestScore, setBestScore, cardCount, onGameO
   }
 
   return (
-    <div className="game-board">
+    <div className={`game-board${isFlipping ? ' game-board--flipping' : ''}`}>
       {cards.map((card) => (
         <Tilt tiltReverse glareEnable glareMaxOpacity={0.4} glarePosition="all" key={`${card.id}-${shuffleCount}`}>
           <div className="card" onClick={() => handleCardClick(card)}>

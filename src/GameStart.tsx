@@ -1,6 +1,7 @@
 
 import { useState, useEffect } from 'react';
 import Typewriter from './Typewriter';
+import { playSound } from './sounds';
 
 const difficulties = ['easy', 'medium', 'hard'] as const;
 
@@ -37,7 +38,7 @@ function GameStart({ onSelectDifficulty }: GameStartProps) {
             <button
               key={level}
               className={`modal-button${selected === i ? ' modal-button--selected' : ''}`}
-              onClick={() => onSelectDifficulty(level)}
+              onClick={() => { playSound('/sfx/pokemon-a-button.mp3'); onSelectDifficulty(level); }}
               onMouseEnter={() => setSelected(i)}>
               {level.charAt(0).toUpperCase() + level.slice(1)}
             </button>

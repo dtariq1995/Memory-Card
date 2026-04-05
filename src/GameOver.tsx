@@ -1,5 +1,7 @@
 
+import { useEffect } from 'react';
 import Typewriter from './Typewriter';
+import { playSound } from './sounds';
 
 interface GameOverProps {
   score: number;
@@ -8,6 +10,15 @@ interface GameOverProps {
 }
 
 function GameOver({score, bestScore, onRestart}: GameOverProps) {
+    useEffect(() => {
+        playSound('/sfx/lose.mp3');
+    }, []);
+
+    function handleRestart() {
+        playSound('/sfx/pokemon-a-button.mp3');
+        onRestart();
+    }
+
     return (
         <div className="game-start-overlay">
             <div className="framed neutral-border game-start battle-modal">
@@ -22,7 +33,7 @@ function GameOver({score, bestScore, onRestart}: GameOverProps) {
                     <img src="/trophy.png" className="modal-icon" />
                     <Typewriter text={`Best Score: ${bestScore}`} delay={1400} />
                 </p>
-                <button className="modal-button modal-button--selected fade-in-delayed" style={{ animationDelay: '2100ms' }} onClick={onRestart}>
+                <button className="modal-button modal-button--selected fade-in-delayed" style={{ animationDelay: '2100ms' }} onClick={handleRestart}>
                     Play Again
                 </button>
             </div>

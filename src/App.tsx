@@ -1,5 +1,3 @@
-// TODO: Add sound effects for card clicks,flips, game win, and game over
-
 import './App.css';
 import Header from './Header';
 import GameBoard from './GameBoard';
@@ -8,6 +6,7 @@ import GameStart from './GameStart';
 import GameWon from './GameWon';
 import GameOver from './GameOver';
 import MusicPlayer from './MusicPlayer';
+import { playSound } from './sounds';
 
 function App() {
   const [score, setScore] = useState(0);
@@ -35,11 +34,13 @@ function App() {
   }
 
   function handleContinue() {
+    playSound('/sfx/Level Up!.mp3');
     setCardCount(prev => prev + 2);
     setGameState('playing');
   }
 
   function handleRestart() {
+    playSound('/sfx/pokemon-a-button.mp3');
     setDifficulty(null);
     setScore(0);
     setGameState('playing');
@@ -58,13 +59,14 @@ function App() {
         setCardCount(18);
         break;
     }
+    playSound('/sfx/startup.mp3');
     setGameState('playing');
     setScore(0);
   }
 
   return (
     <>
-      <MusicPlayer />
+      <MusicPlayer paused={gameState === 'won'} />
       {difficulty === null ? (
         <GameStart onSelectDifficulty={handleDifficultySelect} />
       ) : (

@@ -11,7 +11,12 @@ body {
   background-color: #7bcce9;
   color: #000000;
   font-family: 'Press Start 2P', cursive;
-  cursor: url('/ArrowCursor.png') 0 0, auto;
+}
+
+.game-board--flipping,
+.game-board--flipping * {
+  pointer-events: none;
+  cursor: default !important;
 }
 
 .game-board {
@@ -239,7 +244,7 @@ h1 .rest {
 
 .modal-header {
   margin: 0 0 1.25rem 0;
-  font-size: 1rem;
+  font-size: 1.2rem;
   color: #000000;
 }
 
