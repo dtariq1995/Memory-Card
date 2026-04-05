@@ -1,73 +1,67 @@
-# React + TypeScript + Vite
+# PokéMemory
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A Pokémon-themed memory card game built with React. Test your memory by clicking each card only once — never click the same card twice!
 
-Currently, two official plugins are available:
+![Preview](public/preview.png)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## How to Play
 
-## React Compiler
+1. Select a difficulty on the start screen
+2. Click each card **once** without repeating — the board shuffles after every click
+3. Click a card you've already clicked and it's **Game Over**
+4. Click every card without repeating to **Win**
+5. On a win, choose **Continue** to keep your score and play with 2 extra cards, or **Quit** to return to the start screen
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Difficulty
 
-## Expanding the ESLint configuration
+| Level  | Cards |
+|--------|-------|
+| Easy   | 5     |
+| Medium | 10    |
+| Hard   | 18    |
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Continuing after a win adds 2 cards each time, with no upper limit.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Features
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- Cards fetched from the [Pokémon TCG API](https://pokemontcg.io/) (Base Set 2, Gen 1)
+- 3D card flip animations on every click
+- Retro Game Boy-style modals with typewriter text reveal
+- Keyboard navigation on all menus (↑ ↓ Enter)
+- Persistent best score via localStorage
+- Background music player with a shuffled playlist that auto-advances
+- Sound effects for card flips, game win, game over, and UI interactions
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Tech Stack
+
+- [React 19](https://react.dev/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Vite](https://vitejs.dev/)
+- [TanStack Query](https://tanstack.com/query) — data fetching and caching
+- [react-parallax-tilt](https://www.npmjs.com/package/react-parallax-tilt) — card tilt effect
+- [react-player](https://www.npmjs.com/package/react-player) — background music
+
+## Getting Started
+
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Then open [http://localhost:5173](http://localhost:5173) in your browser.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Project Structure
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+src/
+├── App.tsx           # Root component, game state
+├── GameBoard.tsx     # Card grid, click logic, flip animation
+├── GameStart.tsx     # Difficulty select modal
+├── GameWon.tsx       # Win modal
+├── GameOver.tsx      # Game over modal
+├── Header.tsx        # Score display
+├── MusicPlayer.tsx   # Background music with shuffled playlist
+├── ScoreDisplay.tsx  # Score and best score
+├── Typewriter.tsx    # Typewriter text animation
+└── sounds.ts         # Sound effect utilities
 ```
