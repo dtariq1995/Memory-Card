@@ -1,3 +1,7 @@
+// TODO: Add more songs to the music player 
+// TODO: Add animations for card flips, game win, and game over
+// TODO: Add sound effects for card clicks,flips, game win, and game over
+
 import './App.css';
 import Header from './Header';
 import GameBoard from './GameBoard';
